@@ -35,25 +35,25 @@ export const EXERCISES: Exercise[] = [
   {
     id: 'chest-2', name: 'Barbell Bench Press', category: 'Chest', targetMuscle: 'Primary: Chest',
     description: 'Lie flat on the bench and lower the bar toward your chest with control. Push it upward while keeping your feet stable and your back supported.',
-    difficulty: 'Beginner', equipment: 'Barbell + Bench', image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800',
+    difficulty: 'Beginner', equipment: 'Barbell + Bench', image: '/exercises/barbell_bench_press.png',
     tips: 'Keep your feet flat on the ground for stability.', mistakes: 'Bouncing the bar off the chest.', suggestedSets: '3 sets × 8–12 reps'
   },
   {
     id: 'chest-3', name: 'Incline Dumbbell Press', category: 'Chest', targetMuscle: 'Primary: Upper Chest',
     description: 'Lie on an incline bench and press the dumbbells straight up over your chest. Lower them slowly until you feel a stretch.',
-    difficulty: 'Beginner', equipment: 'Dumbbells + Incline Bench', image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800',
+    difficulty: 'Beginner', equipment: 'Dumbbells + Incline Bench', image: '/exercises/incline_dumbell_press.png',
     tips: 'Set the bench to a 30-45 degree angle.', mistakes: 'Arching the lower back excessively.', suggestedSets: '3 sets × 8–12 reps'
   },
   {
     id: 'chest-4', name: 'Chest Press Machine', category: 'Chest', targetMuscle: 'Primary: Chest',
     description: 'Sit in the machine with your back flat. Push the handles forward until your arms are fully extended, then return with control.',
-    difficulty: 'Beginner', equipment: 'Chest Press Machine', image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800',
+    difficulty: 'Beginner', equipment: 'Chest Press Machine', image: '/exercises/chest_press_machine.png',
     tips: 'Adjust the seat so the handles are at mid-chest level.', mistakes: 'Using momentum instead of chest muscles.', suggestedSets: '3 sets × 10–15 reps'
   },
   {
     id: 'chest-5', name: 'Dumbbell Fly', category: 'Chest', targetMuscle: 'Primary: Chest',
     description: 'Lie flat on a bench with dumbbells held above you. Lower them out to the sides in a wide arc, then bring them back together.',
-    difficulty: 'Beginner', equipment: 'Dumbbells + Bench', image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800',
+    difficulty: 'Beginner', equipment: 'Dumbbells + Bench', image: '/exercises/dumbell_fly.png',
     tips: 'Keep a slight bend in your elbows throughout.', mistakes: 'Going too deep and straining the shoulders.', suggestedSets: '3 sets × 10–15 reps'
   },
   {
