@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Activity, Dumbbell, Apple, Bot, User, LogOut } from 'lucide-react';
+import { Home, Activity, Dumbbell, Apple, Bot, User, LogOut, BookOpen } from 'lucide-react';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -17,6 +17,7 @@ const Sidebar = () => {
     { name: 'Workouts', path: '/workouts', icon: <Dumbbell className="w-5 h-5" /> },
     { name: 'Diet Plans', path: '/diet', icon: <Apple className="w-5 h-5" /> },
     { name: 'Master Plan', path: '/master-plan', icon: <Bot className="w-5 h-5" /> },
+    { name: 'Exercise Library', path: '/exercises', icon: <BookOpen className="w-5 h-5" /> },
     { name: 'Profile', path: '/profile', icon: <User className="w-5 h-5" /> },
   ];
 

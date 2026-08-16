@@ -85,7 +85,7 @@ public class GeminiService {
     private String callOpenRouterFallback(String prompt) {
         Map<String, Object> requestBody = Map.of(
                 "model", "google/gemini-3.7-flash",
-                "max_tokens", 2048,
+                "max_tokens", 8192,
                 "messages", List.of(
                         Map.of("role", "user", "content", prompt)
                 )
@@ -113,6 +113,7 @@ public class GeminiService {
     private String callGroqFallback(String prompt) {
         Map<String, Object> requestBody = Map.of(
                 "model", "llama-3.3-70b-versatile",
+                "max_tokens", 8192,
                 "messages", List.of(
                         Map.of("role", "user", "content", prompt)
                 )

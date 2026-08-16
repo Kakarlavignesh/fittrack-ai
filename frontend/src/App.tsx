@@ -7,6 +7,7 @@ import Progress from './pages/Progress';
 import Workouts from './pages/Workouts';
 import Diet from './pages/Diet';
 import MasterPlan from './pages/MasterPlan';
+import ExerciseLibrary from './pages/ExerciseLibrary';
 import Profile from './pages/Profile';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/workouts" element={<Workouts />} />
           <Route path="/diet" element={<Diet />} />
           <Route path="/master-plan" element={<MasterPlan />} />
+          <Route path="/exercises" element={<ExerciseLibrary />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>
