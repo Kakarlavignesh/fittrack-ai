@@ -16,10 +16,15 @@ const Dashboard = () => {
         setUser(userRes.data);
         
         const progRes = await api.get('/progress');
-        // Sort by date ascending for chart
-        const sortedData = progRes.data.sort((a: any, b: any) => 
-          new Date(a.recordedDate).getTime() - new Date(b.recordedDate).getTime()
-        );
+        
+        // Sort by date ascending for chart, resolving ties by ID to keep chronological order
+        const sortedData = [...progRes.data].sort((a: any, b: any) => {
+          const dateDiff = new Date(a.recordedDate).getTime() - new Date(b.recordedDate).getTime();
+          if (dateDiff === 0) {
+            return (a.id || 0) - (b.id || 0);
+          }
+          return dateDiff;
+        });
         setProgressData(sortedData);
       } catch (err) {
         console.error('Failed to fetch dashboard data', err);
