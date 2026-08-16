@@ -16,16 +16,33 @@ import java.util.Map;
 public class GeminiService {
 
     private final WebClient webClient;
-    private final String apiKey;
+    private final String geminiApiKey;
+    private final String geminiApiUrl;
+    private final String openRouterApiKey;
+    private final String openRouterApiUrl;
 
     public GeminiService(WebClient.Builder webClientBuilder,
-                         @Value("${gemini.api.url}") String apiUrl,
-                         @Value("${gemini.api.key}") String apiKey) {
-        this.webClient = webClientBuilder.baseUrl(apiUrl).build();
-        this.apiKey = apiKey;
+                         @Value("${gemini.api.url}") String geminiApiUrl,
+                         @Value("${gemini.api.key}") String geminiApiKey,
+                         @Value("${openrouter.api.url}") String openRouterApiUrl,
+                         @Value("${openrouter.api.key}") String openRouterApiKey) {
+        this.webClient = webClientBuilder.build();
+        this.geminiApiUrl = geminiApiUrl;
+        this.geminiApiKey = geminiApiKey;
+        this.openRouterApiUrl = openRouterApiUrl;
+        this.openRouterApiKey = openRouterApiKey;
     }
 
     public String generateContent(String prompt) {
+        try {
+            return callGemini(prompt);
+        } catch (Exception e) {
+            System.err.println("Gemini failed, falling back to OpenRouter: " + e.getMessage());
+            return callOpenRouterFallback(prompt);
+        }
+    }
+
+    private String callGemini(String prompt) {
         Map<String, Object> requestBody = Map.of(
                 "contents", List.of(
                         Map.of("parts", List.of(
@@ -34,23 +51,50 @@ public class GeminiService {
                 )
         );
 
-        try {
-            String responseStr = webClient.post()
-                    .header("x-goog-api-key", apiKey)
-                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .body(Mono.just(requestBody), Map.class)
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .block();
+        String responseStr = webClient.post()
+                .uri(geminiApiUrl)
+                .header("x-goog-api-key", geminiApiKey)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(Mono.just(requestBody), Map.class)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
 
+        try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(responseStr);
             return root.path("candidates").get(0)
                     .path("content").path("parts").get(0)
                     .path("text").asText();
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to generate content from Gemini API: " + e.getMessage());
+            throw new RuntimeException("Failed to parse Gemini response: " + e.getMessage());
+        }
+    }
+
+    private String callOpenRouterFallback(String prompt) {
+        Map<String, Object> requestBody = Map.of(
+                "model", "google/gemini-flash-1.5",
+                "messages", List.of(
+                        Map.of("role", "user", "content", prompt)
+                )
+        );
+
+        String responseStr = webClient.post()
+                .uri(openRouterApiUrl)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + openRouterApiKey)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(Mono.just(requestBody), Map.class)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(responseStr);
+            return root.path("choices").get(0)
+                    .path("message").path("content").asText();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate content from OpenRouter fallback: " + e.getMessage());
         }
     }
 }

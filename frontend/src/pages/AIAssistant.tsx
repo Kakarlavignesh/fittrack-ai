@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Bot, Send, Sparkles, AlertTriangle } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import api from '../services/api';
 
 const AIAssistant = () => {
@@ -10,6 +11,15 @@ const AIAssistant = () => {
   const [loading, setLoading] = useState(false);
   const [planLoading, setPlanLoading] = useState(false);
   const [generatedPlan, setGeneratedPlan] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, loading]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,9 +74,13 @@ const AIAssistant = () => {
               <div className={`max-w-[80%] rounded-2xl px-5 py-3 ${
                 msg.role === 'user' 
                   ? 'bg-blue-600 text-white rounded-tr-none' 
-                  : 'bg-gray-700 text-gray-100 rounded-tl-none border border-gray-600'
+                  : 'bg-gray-700 text-gray-100 rounded-tl-none border border-gray-600 prose prose-invert prose-p:leading-snug prose-sm'
               }`}>
-                {msg.text}
+                {msg.role === 'ai' ? (
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                ) : (
+                  msg.text
+                )}
               </div>
             </div>
           ))}
@@ -79,6 +93,7 @@ const AIAssistant = () => {
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="p-4 bg-gray-800 border-t border-gray-700">
