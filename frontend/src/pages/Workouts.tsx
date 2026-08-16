@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Dumbbell, Plus, Trash2 } from 'lucide-react';
 import api from '../services/api';
-import { Workout } from '../types';
+import type { Workout } from '../types';
 
 const WorkoutsPage = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);

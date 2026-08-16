@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Apple, Bot } from 'lucide-react';
 import api from '../services/api';
-import { DietPlan } from '../types';
+import type { DietPlan } from '../types';
 import { Link } from 'react-router-dom';
 
 const DietPage = () => {

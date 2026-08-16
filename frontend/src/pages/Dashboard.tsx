@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Activity, Flame, Target, Trophy } from 'lucide-react';
 import api from '../services/api';
-import { User, Progress } from '../types';
+import type { User, Progress } from '../types';
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);

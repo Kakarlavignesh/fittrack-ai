@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
-import { User } from '../types';
+import type { User } from '../types';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);

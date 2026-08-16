@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Activity, Plus, Trash2 } from 'lucide-react';
 import api from '../services/api';
-import { Progress } from '../types';
+import type { Progress } from '../types';
 
 const ProgressPage = () => {
   const [progressList, setProgressList] = useState<Progress[]>([]);
