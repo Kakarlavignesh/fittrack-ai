@@ -22,7 +22,9 @@ public class AIController {
     @PostMapping("/chat")
     public ResponseEntity<Map<String, String>> chat(@RequestBody ChatRequest request) {
         String aiResponse = geminiService.generateContent(
-                "You are an expert fitness and diet assistant. Answer this query concisely: " + request.getMessage()
+                "You are an expert fitness and diet assistant. Answer this query concisely. " +
+                "CRITICAL: Do NOT use LaTeX math formatting (like \\frac, \\times, or $...$). " +
+                "Use simple human-readable plain text for any formulas (e.g., '10 * weight'). Query: " + request.getMessage()
         );
         return ResponseEntity.ok(Map.of("response", aiResponse));
     }
@@ -37,7 +39,8 @@ public class AIController {
                 "My details: Age: %d, Gender: %s, Height: %.1f cm, Current Weight: %.1f kg, Target Weight: %.1f kg, " +
                 "Goal: %s, Activity Level: %s. " +
                 "Provide daily calories, protein recommendation, suggested meals, workout recommendation, and daily habits. " +
-                "Format beautifully in markdown.",
+                "Format beautifully in markdown. CRITICAL: Do NOT use LaTeX math formatting (like \\frac, \\times, or $...$). " +
+                "Use simple human-readable plain text for any formulas.",
                 user.getAge(), user.getGender(), user.getHeight(), user.getCurrentWeight(), user.getTargetWeight(),
                 user.getFitnessGoal(), user.getActivityLevel()
         );

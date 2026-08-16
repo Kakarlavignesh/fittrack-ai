@@ -40,15 +40,17 @@ export interface Workout {
 }
 
 export interface DietPlan {
-  id?: number;
+  id: number;
   goal: string;
-  dailyCalories: number;
-  protein: number;
-  carbohydrates: number;
-  fats: number;
-  breakfast: string;
-  lunch: string;
-  dinner: string;
-  snacks: string;
+  name?: string;
+  markdownContent?: string;
+  dailyCalories?: number;
+  protein?: number;
+  carbohydrates?: number;
+  fats?: number;
+  breakfast?: string;
+  lunch?: string;
+  dinner?: string;
+  snacks?: string;
   createdAt?: string;
 }

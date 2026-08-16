@@ -24,4 +24,17 @@ public class DietService {
         User user = userService.getUserByEmail(email);
         return dietPlanRepository.findByUserIdOrderByCreatedAtDesc(user.getId());
     }
+
+    public DietPlan renameDietPlan(String email, Long id, String newName) {
+        User user = userService.getUserByEmail(email);
+        DietPlan plan = dietPlanRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Diet Plan not found"));
+        
+        if (!plan.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Unauthorized: You do not have permission to rename this plan.");
+        }
+        
+        plan.setName(newName);
+        return dietPlanRepository.save(plan);
+    }
 }

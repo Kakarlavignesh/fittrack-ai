@@ -6,7 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Progress from './pages/Progress';
 import Workouts from './pages/Workouts';
 import Diet from './pages/Diet';
-import AIAssistant from './pages/AIAssistant';
+import MasterPlan from './pages/MasterPlan';
 import Profile from './pages/Profile';
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
           <Route path="/progress" element={<Progress />} />
           <Route path="/workouts" element={<Workouts />} />
           <Route path="/diet" element={<Diet />} />
-          <Route path="/ai-assistant" element={<AIAssistant />} />
+          <Route path="/master-plan" element={<MasterPlan />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>

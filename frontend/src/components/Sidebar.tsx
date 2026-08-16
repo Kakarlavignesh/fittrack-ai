@@ -16,7 +16,7 @@ const Sidebar = () => {
     { name: 'Progress', path: '/progress', icon: <Activity className="w-5 h-5" /> },
     { name: 'Workouts', path: '/workouts', icon: <Dumbbell className="w-5 h-5" /> },
     { name: 'Diet Plans', path: '/diet', icon: <Apple className="w-5 h-5" /> },
-    { name: 'AI Assistant', path: '/ai-assistant', icon: <Bot className="w-5 h-5" /> },
+    { name: 'Master Plan', path: '/master-plan', icon: <Bot className="w-5 h-5" /> },
     { name: 'Profile', path: '/profile', icon: <User className="w-5 h-5" /> },
   ];
 

@@ -25,6 +25,11 @@ public class DietPlan {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    private String name;
+
+    @Column(columnDefinition = "TEXT")
+    private String markdownContent;
+
     private String goal;
     private Integer dailyCalories;
     private Integer protein;

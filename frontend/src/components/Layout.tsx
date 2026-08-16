@@ -1,5 +1,6 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import ChatWidget from './ChatWidget';
 
 const Layout = () => {
   const token = localStorage.getItem('token');
@@ -16,6 +17,7 @@ const Layout = () => {
           <Outlet />
         </div>
       </div>
+      <ChatWidget />
     </div>
   );
 };
