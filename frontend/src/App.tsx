@@ -24,6 +24,7 @@ function App() {
           <Route path="/diet" element={<Diet />} />
           <Route path="/master-plan" element={<MasterPlan />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>
