@@ -36,9 +36,7 @@ public class GeminiService {
 
         try {
             String responseStr = webClient.post()
-                    .uri(uriBuilder -> uriBuilder
-                            .queryParam("key", apiKey)
-                            .build())
+                    .header("x-goog-api-key", apiKey)
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .body(Mono.just(requestBody), Map.class)
                     .retrieve()
