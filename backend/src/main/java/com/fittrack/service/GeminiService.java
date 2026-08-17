@@ -112,7 +112,7 @@ public class GeminiService {
 
     private String callGroqFallback(String prompt) {
         Map<String, Object> requestBody = Map.of(
-                "model", "llama-3.3-70b-versatile",
+                "model", "groq/compound",
                 "max_tokens", 8192,
                 "messages", List.of(
                         Map.of("role", "user", "content", prompt)

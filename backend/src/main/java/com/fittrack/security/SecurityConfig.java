@@ -62,11 +62,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        List<String> origins = Arrays.stream(frontendUrl.split(","))
-                .map(url -> url.trim().replaceAll("/+$", ""))
-                .toList();
-                
-        configuration.setAllowedOrigins(origins);
+        // Allow all origins, but use setAllowedOriginPatterns because allowCredentials is true
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
         configuration.setAllowCredentials(true);

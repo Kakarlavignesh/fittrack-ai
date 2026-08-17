@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Apple, Bot, Search, Edit2, Check, X } from 'lucide-react';
+import { Apple, Bot, Search, Edit2, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import api from '../services/api';
 import type { DietPlan } from '../types';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,19 @@ const DietPage = () => {
   
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState('');
+  const [expandedIds, setExpandedIds] = useState<Set<number>>(new Set());
+
+  const toggleExpand = (id: number) => {
+    setExpandedIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
 
   useEffect(() => {
     fetchPlans();
@@ -83,15 +96,18 @@ const DietPage = () => {
         ) : (
           filteredPlans.map((plan) => (
             <div key={plan.id} className={`bg-gray-800/70 backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden shadow-xl ${plan.markdownContent ? 'md:col-span-2' : ''}`}>
-              <div className="p-6 border-b border-gray-700 bg-gray-800/90 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div className="flex-1">
+              <div 
+                className="p-6 border-b border-gray-700 bg-gray-800/90 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 cursor-pointer hover:bg-gray-700/50 transition-colors"
+                onClick={() => toggleExpand(plan.id)}
+              >
+                <div className="flex-1 w-full">
                   {editingId === plan.id ? (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                       <input 
                         type="text" 
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
-                        className="bg-gray-900 border border-gray-600 text-white px-3 py-1 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 text-lg font-bold"
+                        className="bg-gray-900 border border-gray-600 text-white px-3 py-1 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 text-lg font-bold w-full sm:w-auto"
                         autoFocus
                       />
                       <button onClick={() => handleRename(plan.id)} className="p-1 text-green-400 hover:bg-gray-700 rounded"><Check className="w-5 h-5" /></button>
@@ -102,7 +118,14 @@ const DietPage = () => {
                       <h3 className="text-xl font-bold text-white flex items-center gap-2">
                         {plan.name || plan.goal}
                       </h3>
-                      <button onClick={() => { setEditingId(plan.id); setEditName(plan.name || plan.goal); }} className="text-gray-400 hover:text-white transition-colors">
+                      <button 
+                        onClick={(e) => { 
+                          e.stopPropagation();
+                          setEditingId(plan.id); 
+                          setEditName(plan.name || plan.goal); 
+                        }} 
+                        className="text-gray-400 hover:text-white transition-colors"
+                      >
                         <Edit2 className="w-4 h-4" />
                       </button>
                     </div>
@@ -119,10 +142,14 @@ const DietPage = () => {
                     <Bot className="w-4 h-4" /> AI Generated
                   </div>
                 )}
+                <div className="text-gray-400 flex-shrink-0 ml-2">
+                  {expandedIds.has(plan.id) ? <ChevronUp className="w-6 h-6" /> : <ChevronDown className="w-6 h-6" />}
+                </div>
               </div>
               
-              {plan.markdownContent ? (
-                <div className="p-6">
+              {expandedIds.has(plan.id) && (
+                plan.markdownContent ? (
+                  <div className="p-6">
                   <div className="prose prose-invert prose-purple max-w-none text-sm md:text-base">
                     <ReactMarkdown>{plan.markdownContent}</ReactMarkdown>
                   </div>
@@ -165,7 +192,7 @@ const DietPage = () => {
                     </div>
                   </div>
                 </>
-              )}
+              ))}
             </div>
           ))
         )}
